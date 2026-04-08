@@ -120,6 +120,8 @@ your code ──► client library ──┘</pre>
     </div>
   </section>
 
+  <hr class="border-border my-4" />
+
   <!-- Supported Boards -->
   <section class="py-12">
     <h2 class="font-mono text-2xl font-bold mb-6 text-text">Supported Boards</h2>
@@ -146,6 +148,8 @@ your code ──► client library ──┘</pre>
       </div>
     </div>
   </section>
+
+  <hr class="border-border my-4" />
 
   <!-- Quick Start -->
   <section class="py-12 max-w-3xl mx-auto">
@@ -185,12 +189,15 @@ radio.send(b"hello lora")</pre>
     </ol>
   </section>
 
+  <hr class="border-border my-4" />
+
   <!-- Repositories -->
   <section class="py-12">
     <h2 class="font-mono text-2xl font-bold mb-6 text-text">Repositories</h2>
 
     <!-- Firmware -->
-    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Firmware</h3>
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-1">Firmware</h3>
+    <p class="text-sm text-text-muted mb-3">The code that runs on the LoRa board itself. Owns the radio hardware, speaks USB.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
       <a
         href="https://github.com/donglora/firmware"
@@ -204,7 +211,8 @@ radio.send(b"hello lora")</pre>
     </div>
 
     <!-- Client Libraries -->
-    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Client Libraries</h3>
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-1">Client Libraries</h3>
+    <p class="text-sm text-text-muted mb-3">Run on your computer. Handle USB discovery, protocol framing, and encoding so you just call <code class="font-mono text-xs text-accent">send()</code> and <code class="font-mono text-xs text-accent">receive()</code>.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
       <a
         href="https://github.com/donglora/client-rs"
@@ -227,7 +235,8 @@ radio.send(b"hello lora")</pre>
     </div>
 
     <!-- Multiplexer -->
-    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Multiplexer</h3>
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-1">Multiplexer</h3>
+    <p class="text-sm text-text-muted mb-3">Optional daemon that lets multiple programs share a single dongle at the same time.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
       <a
         href="https://github.com/donglora/mux-rs"
@@ -236,7 +245,7 @@ radio.send(b"hello lora")</pre>
         rel="noopener noreferrer"
       >
         <span class="font-mono text-accent text-sm">mux-rs</span>
-        <p class="text-sm text-text-muted mt-1">USB multiplexer daemon &mdash; share one radio across multiple programs (Rust)</p>
+        <p class="text-sm text-text-muted mt-1">USB multiplexer daemon (Rust)</p>
       </a>
       <a
         href="https://github.com/donglora/mux-py"
@@ -250,7 +259,8 @@ radio.send(b"hello lora")</pre>
     </div>
 
     <!-- Applications -->
-    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Applications</h3>
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-1">Applications</h3>
+    <p class="text-sm text-text-muted mb-3">Real programs built on the layers above. Examples of what you can do with a DongLoRa dongle.</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <a
         href="https://github.com/donglora/bridge"
