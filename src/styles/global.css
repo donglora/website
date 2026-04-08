@@ -48,4 +48,11 @@
     background: var(--color-border-bright);
     border-radius: 3px;
   }
+
+  /* Shiki code blocks — match site card background */
+  .astro-code {
+    background-color: var(--color-bg-card) !important;
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
 }

@@ -1,5 +1,43 @@
 ---
 import Base from "../layouts/Base.astro";
+import { Code } from "astro:components";
+
+const quickStartCode = `import donglora as dl
+
+ser = dl.connect()
+dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
+dl.send(ser, "StartRx")
+
+while pkt := dl.recv(ser):
+    print(f'{pkt["rssi"]:4d}dBm {pkt["snr"]:3d}dB {pkt["payload"].hex()}')`;
+
+// Shiki theme tuned to match the site's green-accent dark palette
+const siteTheme = {
+  name: "donglora",
+  type: "dark" as const,
+  colors: {
+    "editor.background": "#12121a",
+    "editor.foreground": "#e0e0e8",
+  },
+  settings: [
+    { scope: ["comment"], settings: { foreground: "#555570", fontStyle: "italic" } },
+    { scope: ["keyword", "storage", "keyword.control"], settings: { foreground: "#6ee7b7" } },
+    { scope: ["string", "string.quoted"], settings: { foreground: "#fbbf24" } },
+    { scope: ["constant.numeric", "constant.language"], settings: { foreground: "#c4b5fd" } },
+    { scope: ["entity.name.function", "meta.function-call"], settings: { foreground: "#60a5fa" } },
+    { scope: ["support.function", "support.function.builtin"], settings: { foreground: "#60a5fa" } },
+    { scope: ["variable", "variable.other"], settings: { foreground: "#e0e0e8" } },
+    { scope: ["variable.parameter", "variable.other.readwrite"], settings: { foreground: "#e0e0e8" } },
+    { scope: ["keyword.operator", "keyword.operator.assignment", "keyword.operator.comparison"], settings: { foreground: "#6ee7b7" } },
+    { scope: ["punctuation", "meta.brace"], settings: { foreground: "#8888a0" } },
+    { scope: ["punctuation.definition.string", "punctuation.section"], settings: { foreground: "#fbbf24" } },
+    { scope: ["entity.name.import", "entity.name.module"], settings: { foreground: "#34d399" } },
+    { scope: ["support.type", "entity.name.type"], settings: { foreground: "#60a5fa" } },
+    { scope: ["constant.other", "variable.other.constant"], settings: { foreground: "#c4b5fd" } },
+    { scope: ["meta.function-call.arguments", "variable.parameter.function-call"], settings: { foreground: "#e0e0e8" } },
+    { scope: ["meta.attribute", "entity.other.attribute-name"], settings: { foreground: "#8888a0" } },
+  ],
+};
 ---
 
 <Base title="DongLoRa — Protocol-agnostic LoRa over USB">
@@ -75,18 +113,37 @@ import Base from "../layouts/Base.astro";
         <span class="font-mono text-accent font-bold text-lg shrink-0">3.</span>
         <div>
           <p class="font-medium text-text">Listen for packets</p>
-          <pre
-            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
-            set:html={`import donglora as dl
-
-ser = dl.connect()
-dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
-dl.send(ser, "StartRx")
-
-while pkt := dl.recv(ser):
-    p = pkt["payload"]
-    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')`}
-          />
+          <div class="mt-2 rounded border border-border overflow-hidden relative group" id="code-block">
+            <button
+              id="highlight-toggle"
+              class="absolute top-2 right-2 text-text-dim hover:text-accent transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+              title="Toggle syntax highlighting"
+              aria-label="Toggle syntax highlighting"
+            >
+              <svg id="toggle-icon-on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+              <svg id="toggle-icon-off" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </button>
+            <div id="code-highlighted">
+              <Code code={quickStartCode} lang="python" theme={siteTheme} />
+            </div>
+            <pre id="code-plain" class="hidden font-mono text-sm text-accent px-4 py-4" style="background-color: var(--color-bg-card);">{quickStartCode}</pre>
+          </div>
+          <script is:inline>
+            document.getElementById('highlight-toggle').addEventListener('click', () => {
+              const h = document.getElementById('code-highlighted');
+              const p = document.getElementById('code-plain');
+              const iconOn = document.getElementById('toggle-icon-on');
+              const iconOff = document.getElementById('toggle-icon-off');
+              h.classList.toggle('hidden');
+              p.classList.toggle('hidden');
+              iconOn.classList.toggle('hidden');
+              iconOff.classList.toggle('hidden');
+            });
+          </script>
         </div>
       </li>
     </ol>
@@ -103,11 +160,11 @@ while pkt := dl.recv(ser):
     </p>
     <pre
       class="font-mono text-sm text-accent bg-bg-card border border-border p-6 rounded overflow-x-auto mb-8"
-    >your code ──► client library ──► USB ──► firmware ──► LoRa radio
+    >your code ──► client lib ──► USB ──► DongLoRa radio
 
-your code ──► client library ──┐
-your code ──► client library ──┼──► mux ──► USB ──► firmware ──► LoRa radio
-your code ──► client library ──┘</pre>
+your code ──► client lib ──┐
+your code ──► client lib ──┼──► mux ──► USB ──► DongLoRa radio
+your code ──► client lib ──┘</pre>
     <p class="text-text-muted leading-relaxed mb-6">
       Because the firmware is protocol-agnostic, a DongLoRa dongle works with any LoRa network
       — Meshtastic, MeshCore, custom protocols, or raw packets.
