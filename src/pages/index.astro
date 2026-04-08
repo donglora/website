@@ -175,13 +175,18 @@ your code ──► client library ──┘</pre>
       <li class="flex gap-4">
         <span class="font-mono text-accent font-bold text-lg shrink-0">3.</span>
         <div>
-          <p class="font-medium text-text">Send your first packet</p>
+          <p class="font-medium text-text">Listen for packets</p>
           <pre
             class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
-          >from donglora import DongLoRa
+          >import donglora as dl
 
-radio = DongLoRa()
-radio.send(b"hello lora")</pre>
+ser = dl.connect()
+dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
+dl.send(ser, "StartRx")
+
+while pkt := dl.recv(ser):
+    p = pkt["payload"]
+    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')</pre>
         </div>
       </li>
     </ol>
