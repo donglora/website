@@ -178,7 +178,7 @@ your code ──► client library ──┘</pre>
           <p class="font-medium text-text">Listen for packets</p>
           <pre
             class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
-          >import donglora as dl
+            set:html={`import donglora as dl
 
 ser = dl.connect()
 dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
@@ -186,7 +186,8 @@ dl.send(ser, "StartRx")
 
 while pkt := dl.recv(ser):
     p = pkt["payload"]
-    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')</pre>
+    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')`}
+          />
         </div>
       </li>
     </ol>
