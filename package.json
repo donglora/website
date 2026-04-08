@@ -1,0 +1,21 @@
+{
+  "name": "donglora-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@astrojs/svelte": "^8.0.4",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.4",
+    "esptool-js": "^0.6.0",
+    "marked": "^18.0.0",
+    "svelte": "^5.55.2",
+    "tailwindcss": "^4.2.2"
+  }
+}

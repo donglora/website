@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import Flasher from "../components/Flasher.svelte";
+---
+
+<Base title="DongLoRa Flasher" description="Flash DongLoRa firmware onto your LoRa board from the browser">
+  <h1 class="font-mono text-3xl font-bold mb-2">Firmware Flasher</h1>
+  <p class="text-text-muted mb-8">
+    Flash DongLoRa firmware directly from your browser using Web Serial, or download UF2 files for nRF boards.
+  </p>
+  <Flasher client:load />
+</Base>

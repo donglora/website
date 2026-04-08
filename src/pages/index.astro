@@ -1,0 +1,284 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="DongLoRa — Protocol-agnostic LoRa over USB">
+  <!-- Early development banner -->
+  <div class="bg-warn/10 border border-warn/30 rounded p-4 mb-8">
+    <p class="text-warn text-sm font-medium mb-1">Early development</p>
+    <p class="text-text-muted text-sm">
+      DongLoRa is a tool for building tools. It assumes familiarity with LoRa, serial protocols,
+      and programming. APIs may change. If you're looking for a ready-made mesh device, check out
+      <a href="https://meshtastic.org" class="text-accent hover:text-accent-bright" target="_blank" rel="noopener noreferrer">Meshtastic</a> or
+      <a href="https://meshcore.co.uk" class="text-accent hover:text-accent-bright" target="_blank" rel="noopener noreferrer">MeshCore</a>.
+    </p>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-16 text-center">
+    <h1 class="font-mono text-5xl sm:text-6xl font-bold text-accent mb-4">DongLoRa</h1>
+    <p class="text-text-dim text-sm mb-3 italic">/ˈdɒŋ.ɡəl.ɔːr.ə/ — dongle + LoRa</p>
+    <p class="text-xl text-text-muted max-w-2xl mx-auto mb-2">
+      Protocol-agnostic LoRa over USB.
+    </p>
+    <p class="text-lg text-text-dim max-w-xl mx-auto mb-8">
+      Plug in. Talk radio.
+    </p>
+    <a
+      href="/flash"
+      class="inline-block bg-accent text-bg font-mono font-medium px-6 py-3 rounded hover:bg-accent-bright transition-colors"
+    >
+      Flash Your Board
+    </a>
+  </section>
+
+  <!-- What is it -->
+  <section class="py-12 max-w-3xl mx-auto">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">What is it?</h2>
+    <p class="text-text-muted leading-relaxed mb-4">
+      LoRa radios are cheap, long-range, low-power, and everywhere. But using one from a
+      computer is surprisingly hard. You either run someone else's firmware with someone else's
+      protocol baked in, or you write your own embedded code from scratch.
+    </p>
+    <p class="text-text-muted leading-relaxed mb-4">
+      DongLoRa takes a different approach. Flash firmware onto a LoRa board once, and from that
+      point on it's a dumb USB radio. It doesn't know or care what protocol you're running. It
+      receives bytes from the air and hands them to your computer. It takes bytes from your
+      computer and puts them on the air. That's all it does.
+    </p>
+    <p class="text-text-muted leading-relaxed">
+      Everything else — what those bytes mean, how to route them, what to display, how to respond
+      — happens in your code, on your computer, in whatever language you want.
+    </p>
+  </section>
+
+  <!-- Architecture -->
+  <section class="py-8 max-w-3xl mx-auto">
+    <pre
+      class="font-mono text-sm text-accent bg-bg-card border border-border p-6 rounded overflow-x-auto"
+    >your code ──► client library ──► USB ──► firmware ──► LoRa radio
+
+your code ──► client library ──┐
+your code ──► client library ──┼──► mux ──► USB ──► firmware ──► LoRa radio
+your code ──► client library ──┘</pre>
+  </section>
+
+  <!-- Why / What can you do -->
+  <section class="py-12 max-w-3xl mx-auto">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">What can you do with it?</h2>
+    <p class="text-text-muted leading-relaxed mb-6">
+      Because the firmware is protocol-agnostic, a DongLoRa dongle works with any LoRa network
+      — Meshtastic, MeshCore, custom protocols, or raw packets. You get the feedback loop of a
+      scripting environment instead of a flash-and-pray embedded workflow.
+    </p>
+    <div class="space-y-4">
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Interact with mesh networks</h3>
+        <p class="text-sm text-text-muted">
+          Send and receive packets on Meshtastic, MeshCore, or any other LoRa protocol from a
+          laptop, desktop, or Raspberry Pi. Write scripts that interact with mesh traffic
+          programmatically.
+        </p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Build bots and automations</h3>
+        <p class="text-sm text-text-muted">
+          Write a chatbot that receives messages over LoRa and responds via an LLM. Build an
+          alert system. Log every packet on a frequency. All from Python or Rust on a server.
+        </p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Bridge distant networks</h3>
+        <p class="text-sm text-text-muted">
+          The bridge application connects to local LoRa traffic, encrypts it, and relays it to
+          other bridges over the internet. Two bridges in different cities extend a mesh network's
+          range by thousands of miles.
+        </p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Prototype without embedded development</h3>
+        <p class="text-sm text-text-muted">
+          Test a LoRa idea in Python in an afternoon. Change frequency, bandwidth, spreading factor
+          — all from your code. Iterate fast. No cross-compilation, no JTAG, no boot loops.
+        </p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Analyze RF traffic</h3>
+        <p class="text-sm text-text-muted">
+          Sniff, decode, and log every packet on a frequency. Useful for debugging mesh deployments,
+          understanding channel utilization, or reverse-engineering protocols.
+        </p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Deploy headless gateways</h3>
+        <p class="text-sm text-text-muted">
+          A Raspberry Pi with a dongle plugged in is a LoRa gateway. Add the mux and you can run
+          multiple services on a single radio — a mesh node, a packet logger, and a bridge, all at
+          once.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Supported Boards -->
+  <section class="py-12">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">Supported Boards</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Heltec V3</h3>
+        <p class="text-sm text-text-muted">ESP32-S3 &middot; SX1262</p>
+        <p class="text-xs text-accent mt-2 font-mono">Web Flash</p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Heltec V4</h3>
+        <p class="text-sm text-text-muted">ESP32-S3 &middot; SX1262</p>
+        <p class="text-xs text-accent mt-2 font-mono">Web Flash</p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">RAK WisBlock 4631</h3>
+        <p class="text-sm text-text-muted">nRF52840 &middot; SX1262</p>
+        <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
+      </div>
+      <div class="bg-bg-card border border-border p-5 rounded">
+        <h3 class="font-mono font-medium text-text mb-2">Wio Tracker L1</h3>
+        <p class="text-sm text-text-muted">nRF52840 &middot; SX1262</p>
+        <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="py-12 max-w-3xl mx-auto">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">Quick Start</h2>
+    <ol class="space-y-6">
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">1.</span>
+        <div>
+          <p class="font-medium text-text">Flash the firmware</p>
+          <p class="text-sm text-text-muted">
+            Use the <a href="/flash" class="text-accent hover:text-accent-bright">web flasher</a> or
+            flash from the command line.
+          </p>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">2.</span>
+        <div>
+          <p class="font-medium text-text">Install a client library</p>
+          <pre
+            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-2 rounded mt-2"
+          >pip install donglora-python</pre>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">3.</span>
+        <div>
+          <p class="font-medium text-text">Send your first packet</p>
+          <pre
+            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
+          >from donglora import DongLoRa
+
+radio = DongLoRa()
+radio.send(b"hello lora")</pre>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Repositories -->
+  <section class="py-12">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">Repositories</h2>
+
+    <!-- Firmware -->
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Firmware</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+      <a
+        href="https://github.com/donglora/firmware"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">firmware</span>
+        <p class="text-sm text-text-muted mt-1">Embedded firmware for LoRa boards (Rust, no_std, Embassy)</p>
+      </a>
+    </div>
+
+    <!-- Client Libraries -->
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Client Libraries</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+      <a
+        href="https://github.com/donglora/client-rs"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">client-rs</span>
+        <p class="text-sm text-text-muted mt-1">Rust client library &mdash; <code class="font-mono text-xs text-accent">donglora-client</code> on crates.io</p>
+      </a>
+      <a
+        href="https://github.com/donglora/client-py"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">client-py</span>
+        <p class="text-sm text-text-muted mt-1">Python client library &mdash; <code class="font-mono text-xs text-accent">donglora-python</code> on PyPI</p>
+      </a>
+    </div>
+
+    <!-- Multiplexer -->
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Multiplexer</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+      <a
+        href="https://github.com/donglora/mux-rs"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">mux-rs</span>
+        <p class="text-sm text-text-muted mt-1">USB multiplexer daemon &mdash; share one radio across multiple programs (Rust)</p>
+      </a>
+      <a
+        href="https://github.com/donglora/mux-py"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">mux-py</span>
+        <p class="text-sm text-text-muted mt-1">USB multiplexer daemon (Python)</p>
+      </a>
+    </div>
+
+    <!-- Applications -->
+    <h3 class="font-mono text-sm text-text-dim uppercase tracking-wider mb-3">Applications</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <a
+        href="https://github.com/donglora/bridge"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">bridge</span>
+        <p class="text-sm text-text-muted mt-1">P2P LoRa bridge &mdash; relays encrypted packets across the internet (Rust)</p>
+      </a>
+      <a
+        href="https://github.com/donglora/ai-bot"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">ai-bot</span>
+        <p class="text-sm text-text-muted mt-1">MeshCore AI chatbot &mdash; mesh name "Orac" (Python)</p>
+      </a>
+      <a
+        href="https://github.com/donglora/examples"
+        class="bg-bg-card border border-border p-4 rounded hover:border-border-bright transition-colors block"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="font-mono text-accent text-sm">examples</span>
+        <p class="text-sm text-text-muted mt-1">Ready-to-run scripts &mdash; receive, transmit, ping-pong, bridge (Python)</p>
+      </a>
+    </div>
+  </section>
+</Base>
