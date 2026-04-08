@@ -36,40 +36,81 @@ import Base from "../layouts/Base.astro";
   <section class="py-12 max-w-3xl mx-auto">
     <h2 class="font-mono text-2xl font-bold mb-6 text-text">What is it?</h2>
     <p class="text-text-muted leading-relaxed mb-4">
-      LoRa radios are cheap, long-range, low-power, and everywhere. But using one from a
-      computer is surprisingly hard. You either run someone else's firmware with someone else's
-      protocol baked in, or you write your own embedded code from scratch.
-    </p>
-    <p class="text-text-muted leading-relaxed mb-4">
-      DongLoRa takes a different approach. Flash firmware onto a LoRa board once, and from that
-      point on it's a dumb USB radio. It doesn't know or care what protocol you're running. It
-      receives bytes from the air and hands them to your computer. It takes bytes from your
-      computer and puts them on the air. That's all it does.
+      Flash firmware onto a LoRa board once and it becomes a dumb USB radio. It doesn't know or
+      care what protocol you're running — it just moves bytes between the air and your computer.
     </p>
     <p class="text-text-muted leading-relaxed">
-      Everything else — what those bytes mean, how to route them, what to display, how to respond
-      — happens in your code, on your computer, in whatever language you want.
+      Everything else — routing, encryption, display, response logic — happens in your code,
+      in Python, Rust, or whatever you want — with the feedback loop of a scripting
+      environment instead of a flash-and-pray embedded workflow.
     </p>
   </section>
 
-  <!-- Architecture -->
-  <section class="py-8 max-w-3xl mx-auto">
+  <hr class="border-border my-4" />
+
+  <!-- Quick Start -->
+  <section class="py-12 max-w-3xl mx-auto">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">Quick Start</h2>
+    <ol class="space-y-6">
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">1.</span>
+        <div>
+          <p class="font-medium text-text">Flash the firmware</p>
+          <p class="text-sm text-text-muted">
+            Use the <a href="/flash" class="text-accent hover:text-accent-bright">web flasher</a> or
+            flash from the command line.
+          </p>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">2.</span>
+        <div>
+          <p class="font-medium text-text">Install a client library</p>
+          <pre
+            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-2 rounded mt-2"
+          >pip install donglora</pre>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="font-mono text-accent font-bold text-lg shrink-0">3.</span>
+        <div>
+          <p class="font-medium text-text">Listen for packets</p>
+          <pre
+            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
+            set:html={`import donglora as dl
+
+ser = dl.connect()
+dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
+dl.send(ser, "StartRx")
+
+while pkt := dl.recv(ser):
+    p = pkt["payload"]
+    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')`}
+          />
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <hr class="border-border my-4" />
+
+  <!-- What can you do -->
+  <section class="py-12 max-w-3xl mx-auto">
+    <h2 class="font-mono text-2xl font-bold mb-6 text-text">What can you do with it?</h2>
+    <p class="text-text-muted leading-relaxed mb-6">
+      Connect your code directly to a LoRa radio over USB — or run the multiplexer and let
+      multiple programs share a single dongle at the same time.
+    </p>
     <pre
-      class="font-mono text-sm text-accent bg-bg-card border border-border p-6 rounded overflow-x-auto"
+      class="font-mono text-sm text-accent bg-bg-card border border-border p-6 rounded overflow-x-auto mb-8"
     >your code ──► client library ──► USB ──► firmware ──► LoRa radio
 
 your code ──► client library ──┐
 your code ──► client library ──┼──► mux ──► USB ──► firmware ──► LoRa radio
 your code ──► client library ──┘</pre>
-  </section>
-
-  <!-- Why / What can you do -->
-  <section class="py-12 max-w-3xl mx-auto">
-    <h2 class="font-mono text-2xl font-bold mb-6 text-text">What can you do with it?</h2>
     <p class="text-text-muted leading-relaxed mb-6">
       Because the firmware is protocol-agnostic, a DongLoRa dongle works with any LoRa network
-      — Meshtastic, MeshCore, custom protocols, or raw packets. You get the feedback loop of a
-      scripting environment instead of a flash-and-pray embedded workflow.
+      — Meshtastic, MeshCore, custom protocols, or raw packets.
     </p>
     <div class="space-y-4">
       <div class="bg-bg-card border border-border p-5 rounded">
@@ -147,50 +188,6 @@ your code ──► client library ──┘</pre>
         <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
       </div>
     </div>
-  </section>
-
-  <!-- Quick Start -->
-  <section class="py-12">
-    <h2 class="font-mono text-2xl font-bold mb-6 text-text">Quick Start</h2>
-    <ol class="space-y-6">
-      <li class="flex gap-4">
-        <span class="font-mono text-accent font-bold text-lg shrink-0">1.</span>
-        <div>
-          <p class="font-medium text-text">Flash the firmware</p>
-          <p class="text-sm text-text-muted">
-            Use the <a href="/flash" class="text-accent hover:text-accent-bright">web flasher</a> or
-            flash from the command line.
-          </p>
-        </div>
-      </li>
-      <li class="flex gap-4">
-        <span class="font-mono text-accent font-bold text-lg shrink-0">2.</span>
-        <div>
-          <p class="font-medium text-text">Install a client library</p>
-          <pre
-            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-2 rounded mt-2"
-          >pip install donglora</pre>
-        </div>
-      </li>
-      <li class="flex gap-4">
-        <span class="font-mono text-accent font-bold text-lg shrink-0">3.</span>
-        <div>
-          <p class="font-medium text-text">Listen for packets</p>
-          <pre
-            class="font-mono text-sm text-accent bg-bg-card border border-border px-4 py-3 rounded mt-2 overflow-x-auto"
-            set:html={`import donglora as dl
-
-ser = dl.connect()
-dl.send(ser, "SetConfig", config=dl.DEFAULT_CONFIG)
-dl.send(ser, "StartRx")
-
-while pkt := dl.recv(ser):
-    p = pkt["payload"]
-    print(f'{pkt["rssi"]:4d}dBm  {pkt["snr"]:3d}dB  {p.hex()}')`}
-          />
-        </div>
-      </li>
-    </ol>
   </section>
 
   <hr class="border-border my-4" />
