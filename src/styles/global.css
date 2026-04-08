@@ -49,10 +49,19 @@
     border-radius: 3px;
   }
 
-  /* All pre blocks: stay within viewport, scroll content */
+  /* Prevent any content from blowing out the viewport width */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Pre blocks scroll their own content horizontally */
   pre {
-    max-width: 100%;
     overflow-x: auto;
+  }
+
+  /* Flex children containing pre blocks must be allowed to shrink */
+  li > div {
+    min-width: 0;
   }
 
   /* Shiki code blocks — match site card background */
