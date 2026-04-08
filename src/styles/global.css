@@ -49,6 +49,12 @@
     border-radius: 3px;
   }
 
+  /* All pre blocks: stay within viewport, scroll content */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   /* Shiki code blocks — match site card background */
   .astro-code {
     background-color: var(--color-bg-card) !important;
