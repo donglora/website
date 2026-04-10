@@ -19,7 +19,9 @@
       ? "RAK4631"
       : board.id === "wio_tracker_l1"
         ? "WIO-L1"
-        : "UF2BOOT",
+        : board.id === "waveshare_rp2040_lora"
+          ? "RPI-RP2"
+          : "UF2BOOT",
   );
 
   function handleDownload() {
@@ -99,7 +101,7 @@
         If you have a debug probe (J-Link, DAPLink), you can flash the .elf directly:
       </p>
       <pre class="font-mono text-xs text-accent bg-bg-elevated p-3 rounded overflow-x-auto">cargo install probe-rs-tools
-probe-rs run --chip nRF52840_xxAA donglora-{board.id}-v{release.version}.elf</pre>
+probe-rs run --chip {board.family === "rp2040" ? "rp2040" : "nRF52840_xxAA"} donglora-{board.id}-v{release.version}.elf</pre>
     </div>
   </div>
 </div>

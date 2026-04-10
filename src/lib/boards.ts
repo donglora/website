@@ -41,6 +41,15 @@ export const boards: BoardDef[] = [
     assetPattern: "donglora-rak_wisblock_4631-v{version}.uf2",
   },
   {
+    id: "waveshare_rp2040_lora",
+    name: "Waveshare RP2040-LoRa",
+    mcu: "RP2040",
+    radio: "SX1262",
+    family: "rp2040",
+    flashMethod: "uf2",
+    assetPattern: "donglora-waveshare_rp2040_lora-v{version}.uf2",
+  },
+  {
     id: "wio_tracker_l1",
     name: "Wio Tracker L1",
     mcu: "nRF52840",
