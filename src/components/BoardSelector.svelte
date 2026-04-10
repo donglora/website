@@ -56,9 +56,9 @@
     {/each}
   </div>
 
-  <p class="text-xs text-text-dim mb-2 font-mono">RP2040</p>
+  <p class="text-xs text-text-dim mb-2 font-mono">nRF52840</p>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-    {#each rpBoards as board}
+    {#each nrfBoards as board}
       <button
         class="text-left bg-bg-card border p-4 rounded transition-all cursor-pointer
           {selected?.id === board.id
@@ -73,9 +73,9 @@
     {/each}
   </div>
 
-  <p class="text-xs text-text-dim mb-2 font-mono">nRF52840</p>
+  <p class="text-xs text-text-dim mb-2 font-mono">RP2040</p>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-    {#each nrfBoards as board}
+    {#each rpBoards as board}
       <button
         class="text-left bg-bg-card border p-4 rounded transition-all cursor-pointer
           {selected?.id === board.id
