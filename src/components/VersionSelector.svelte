@@ -12,7 +12,17 @@
 
   let { releases, selected, onselect, loading, error }: Props = $props();
 
-  let changelogHtml = $derived(selected?.body ? marked.parse(selected.body) : "");
+  // Tag Keep-a-Changelog section headings so CSS can color-code them
+  // (Added → green, Changed → yellow, Fixed → blue, etc.).
+  function renderBody(body: string): string {
+    const html = marked.parse(body) as string;
+    return html.replace(
+      /<h3>(Added|Changed|Fixed|Removed|Deprecated|Security)<\/h3>/g,
+      (_, text) => `<h3 data-section="${text.toLowerCase()}">${text}</h3>`,
+    );
+  }
+
+  let changelogHtml = $derived(selected?.body ? renderBody(selected.body) : "");
 
   function handleChange(e: Event) {
     const tag = (e.target as HTMLSelectElement).value;
@@ -61,49 +71,14 @@
     </div>
 
     {#if selected && changelogHtml}
-      <div class="mt-4 bg-bg-card border border-border rounded p-4">
-        <h4 class="font-mono text-xs text-text-dim uppercase tracking-wider mb-3">Changelog</h4>
-        <div class="prose-dark text-sm text-text-muted leading-relaxed">
+      <div class="mt-4 bg-bg-card border border-border rounded p-5">
+        <h4 class="font-mono text-xs text-text-dim uppercase tracking-wider mb-4">Changelog</h4>
+        <!-- Styles live in src/styles/global.css — Svelte component <style>
+             scoping wasn't being emitted into the prod CSS bundle. -->
+        <div class="changelog text-sm text-text-muted">
           {@html changelogHtml}
         </div>
       </div>
     {/if}
   {/if}
 </div>
-
-<style>
-  .prose-dark :global(h1),
-  .prose-dark :global(h2),
-  .prose-dark :global(h3) {
-    color: var(--color-text);
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  .prose-dark :global(ul) {
-    list-style-type: disc;
-    padding-left: 1.25rem;
-  }
-  .prose-dark :global(li) {
-    margin-bottom: 0.25rem;
-  }
-  .prose-dark :global(code) {
-    font-family: var(--font-mono);
-    font-size: 0.8em;
-    color: var(--color-accent);
-    background: var(--color-bg-elevated);
-    padding: 0.1em 0.3em;
-    border-radius: 2px;
-  }
-  .prose-dark :global(a) {
-    color: var(--color-accent);
-  }
-  .prose-dark :global(a:hover) {
-    color: var(--color-accent-bright);
-  }
-  .prose-dark :global(p) {
-    margin-bottom: 0.5rem;
-  }
-</style>
