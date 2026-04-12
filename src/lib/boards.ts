@@ -2,6 +2,17 @@ import type { BoardDef } from "./types";
 
 export const boards: BoardDef[] = [
   {
+    id: "elecrow_thinknode_m2",
+    name: "ELECROW ThinkNode-M2",
+    mcu: "ESP32-S3",
+    radio: "SX1262",
+    family: "esp32s3",
+    flashMethod: "download-only",
+    assetPattern: "donglora-elecrow_thinknode_m2-v{version}.bin",
+    notes:
+      "Elecrow Meshtastic handset with SH1106 OLED. Uses CP2102 USB-to-UART bridge — download the .bin and flash with espflash CLI.",
+  },
+  {
     id: "heltec_v3",
     name: "Heltec V3",
     mcu: "ESP32-S3",
