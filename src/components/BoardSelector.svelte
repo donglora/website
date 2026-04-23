@@ -69,7 +69,7 @@
 
 {#snippet boardCard(board: BoardDef)}
   <button
-    class="text-left bg-bg-card border p-4 rounded transition-all cursor-pointer
+    class="flex flex-col h-full text-left bg-bg-card border p-4 rounded transition-all cursor-pointer
       {selected?.id === board.id
       ? 'border-accent shadow-[0_0_12px_oklch(from_var(--color-accent)_l_c_h_/_0.15)]'
       : 'border-border hover:border-border-bright'}"
@@ -77,14 +77,14 @@
   >
     <div class="font-mono font-medium text-text text-sm">{board.name}</div>
     <div class="text-xs text-text-muted mt-1">{board.mcu} &middot; {board.radio}</div>
-    <div class="text-xs {badgeColor(board)} mt-2 font-mono">{badgeText(board)}</div>
+    <div class="text-xs {badgeColor(board)} mt-auto pt-2 font-mono">{badgeText(board)}</div>
   </button>
 {/snippet}
 
-{#snippet familySection(label: string, list: BoardDef[], gridCols: string)}
+{#snippet familySection(label: string, list: BoardDef[])}
   {#if list.length > 0}
     <p class="text-xs text-text-dim mb-2 font-mono">{label}</p>
-    <div class="grid {gridCols} gap-3 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
       {#each list as board (board.id)}
         {@render boardCard(board)}
       {/each}
@@ -165,9 +165,9 @@
       </button>
     </div>
   {:else}
-    {@render familySection("ESP32", esp32Boards, "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4")}
-    {@render familySection("ESP32-S3", espBoards, "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4")}
-    {@render familySection("nRF52840", nrfBoards, "grid-cols-1 sm:grid-cols-2")}
-    {@render familySection("RP2040", rpBoards, "grid-cols-1 sm:grid-cols-2")}
+    {@render familySection("ESP32", esp32Boards)}
+    {@render familySection("ESP32-S3", espBoards)}
+    {@render familySection("nRF52840", nrfBoards)}
+    {@render familySection("RP2040", rpBoards)}
   {/if}
 </div>
