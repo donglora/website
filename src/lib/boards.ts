@@ -2,6 +2,17 @@ import type { BoardDef } from "./types";
 
 export const boards: BoardDef[] = [
   {
+    id: "lilygo_tbeam",
+    name: "LilyGo T-Beam (classic)",
+    mcu: "ESP32",
+    radio: "SX1276",
+    family: "esp32",
+    flashMethod: "web-serial",
+    assetPattern: "donglora-lilygo_tbeam-v{version}.bin",
+    notes:
+      "Original T-Beam with ESP32 + SX1276 + SSD1306 OLED + AXP192 PMIC. Flashes over the on-board CP2102 USB-to-UART bridge. Clients connect via serial (BLE planned).",
+  },
+  {
     id: "elecrow_thinknode_m2",
     name: "ELECROW ThinkNode-M2",
     mcu: "ESP32-S3",
@@ -42,6 +53,17 @@ export const boards: BoardDef[] = [
     family: "esp32s3",
     flashMethod: "web-serial",
     assetPattern: "donglora-heltec_v4-v{version}.bin",
+  },
+  {
+    id: "lilygo_tbeam_supreme",
+    name: "LilyGo T-Beam S3 Supreme",
+    mcu: "ESP32-S3",
+    radio: "SX1262",
+    family: "esp32s3",
+    flashMethod: "web-serial",
+    assetPattern: "donglora-lilygo_tbeam_supreme-v{version}.bin",
+    notes:
+      "T-Beam Supreme with ESP32-S3 + SX1262 + SH1106 OLED + AXP2101 PMIC. Flashes over native USB CDC-ACM — no UART bridge.",
   },
   {
     id: "rak_wisblock_4631",

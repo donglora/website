@@ -59,7 +59,7 @@
   {#if selectedBoard && selectedRelease}
     <div class="border-t border-border pt-8">
       <h3 class="font-mono text-sm text-text-muted mb-3 uppercase tracking-wider">
-        {#if selectedBoard.family === "esp32s3"}
+        {#if (selectedBoard.family === "esp32" || selectedBoard.family === "esp32s3")}
           Flash Firmware
         {:else}
           Download Firmware
@@ -72,7 +72,7 @@
         </div>
       {/if}
 
-      {#if selectedBoard.family === "esp32s3"}
+      {#if (selectedBoard.family === "esp32" || selectedBoard.family === "esp32s3")}
         <EspFlashFlow board={selectedBoard} release={selectedRelease} />
       {:else}
         <Uf2DownloadFlow board={selectedBoard} release={selectedRelease} />

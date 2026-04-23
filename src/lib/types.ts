@@ -1,4 +1,4 @@
-export type BoardFamily = "esp32s3" | "nrf52840" | "rp2040";
+export type BoardFamily = "esp32" | "esp32s3" | "nrf52840" | "rp2040";
 export type FlashMethod = "web-serial" | "uf2" | "download-only";
 
 export interface BoardDef {

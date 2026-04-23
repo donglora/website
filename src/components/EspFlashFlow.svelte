@@ -38,7 +38,7 @@
 
     let session;
     try {
-      session = await connect(callbacks);
+      session = await connect(callbacks, board.family === "esp32" ? "esp32" : "esp32s3");
     } catch (err) {
       const msg = err instanceof DOMException && err.name === "NotFoundError"
         ? "Port selection cancelled."

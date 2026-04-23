@@ -1,5 +1,7 @@
 import type { FlashProgress } from "./types";
 
+export type EspChipFamily = "esp32" | "esp32s3";
+
 export function isWebSerialSupported(): boolean {
   return typeof navigator !== "undefined" && "serial" in navigator;
 }
@@ -19,7 +21,20 @@ async function loadEsptool() {
   return { ESPLoader: mod.ESPLoader, Transport: mod.Transport };
 }
 
-export async function connect(callbacks: FlashCallbacks): Promise<FlashSession> {
+function chipFamilyLabel(family: EspChipFamily): string {
+  return family === "esp32s3" ? "ESP32-S3" : "ESP32";
+}
+
+function isChipCompatible(detected: string, expected: EspChipFamily): boolean {
+  if (expected === "esp32s3") return detected.includes("ESP32-S3");
+  // Classic ESP32: esptool-js reports "ESP32". Exclude S2/S3/C3/C6/H2/P4 variants.
+  return /^ESP32(?![-\s]?(S|C|H|P)\d)/i.test(detected);
+}
+
+export async function connect(
+  callbacks: FlashCallbacks,
+  expectedChip: EspChipFamily,
+): Promise<FlashSession> {
   if (!isWebSerialSupported()) {
     throw new Error("Web Serial API is not supported in this browser. Use Chrome, Edge, or Opera.");
   }
@@ -45,16 +60,17 @@ export async function connect(callbacks: FlashCallbacks): Promise<FlashSession> 
     },
   });
 
-  callbacks.onLog("Connecting to ESP32...");
+  const expectedLabel = chipFamilyLabel(expectedChip);
+  callbacks.onLog(`Connecting to ${expectedLabel}...`);
   callbacks.onProgress({ phase: "Connecting", percent: 0, message: "Detecting chip..." });
   await loader.main();
 
   const chip = loader.chip.CHIP_NAME;
   callbacks.onLog(`Detected: ${chip}`);
 
-  if (!chip.includes("ESP32-S3")) {
+  if (!isChipCompatible(chip, expectedChip)) {
     await transport.disconnect();
-    throw new Error(`Expected ESP32-S3 but detected ${chip}. Make sure you selected the correct board.`);
+    throw new Error(`Expected ${expectedLabel} but detected ${chip}. Make sure you selected the correct board.`);
   }
 
   return { transport, loader };
