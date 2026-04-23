@@ -7,20 +7,32 @@ export const boards: BoardDef[] = [
     mcu: "ESP32-S3",
     radio: "SX1262",
     family: "esp32s3",
-    flashMethod: "download-only",
+    flashMethod: "web-serial",
     assetPattern: "donglora-elecrow_thinknode_m2-v{version}.bin",
     notes:
-      "Elecrow Meshtastic handset with SH1106 OLED. Uses CP2102 USB-to-UART bridge — download the .bin and flash with espflash CLI.",
+      "Elecrow Meshtastic handset with SH1106 OLED. Flashes over the built-in CP2102 USB-to-UART bridge — no native USB, so clients connect via serial (BLE planned).",
+  },
+  {
+    id: "heltec_v3_uart",
+    name: "Heltec V3 (UART) — stock",
+    mcu: "ESP32-S3",
+    radio: "SX1262",
+    family: "esp32s3",
+    flashMethod: "web-serial",
+    assetPattern: "donglora-heltec_v3_uart-v{version}.bin",
+    notes:
+      "Default Heltec V3 hardware — pick this one if you bought a stock V3. Flashes over the board's CP2102 USB-to-UART bridge. Clients connect via serial (BLE planned), not native USB.",
   },
   {
     id: "heltec_v3",
-    name: "Heltec V3",
+    name: "Heltec V3 (USB CDC) — modded",
     mcu: "ESP32-S3",
     radio: "SX1262",
     family: "esp32s3",
     flashMethod: "web-serial",
     assetPattern: "donglora-heltec_v3-v{version}.bin",
-    notes: "Native USB CDC-ACM (hardware mod may be required on some units)",
+    notes:
+      "Only choose this if you've hardware-modded your V3 for native USB CDC-ACM. Most stock V3s should use the UART variant above.",
   },
   {
     id: "heltec_v4",
@@ -30,17 +42,6 @@ export const boards: BoardDef[] = [
     family: "esp32s3",
     flashMethod: "web-serial",
     assetPattern: "donglora-heltec_v4-v{version}.bin",
-  },
-  {
-    id: "heltec_v3_uart",
-    name: "Heltec V3 (UART)",
-    mcu: "ESP32-S3",
-    radio: "SX1262",
-    family: "esp32s3",
-    flashMethod: "download-only",
-    assetPattern: "donglora-heltec_v3_uart-v{version}.bin",
-    notes:
-      "Uses CP2102 USB-to-UART bridge. Web flashing is unreliable — download the .bin and flash with espflash CLI.",
   },
   {
     id: "rak_wisblock_4631",
