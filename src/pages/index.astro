@@ -1,6 +1,11 @@
 ---
 import Base from "../layouts/Base.astro";
 import { Code } from "astro:components";
+import { boards, badgeText, badgeColor } from "../lib/boards";
+
+const sortedBoards = [...boards].sort((a, b) =>
+  a.name.localeCompare(b.name, "en", { sensitivity: "base" }),
+);
 
 const quickStartCode = `import donglora as dl
 
@@ -224,36 +229,20 @@ your code ──► client lib ──┘</pre>
   <section class="py-12">
     <h2 class="font-mono text-2xl font-bold mb-6 text-text">Supported Boards</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">ELECROW ThinkNode-M2</h3>
-        <p class="text-sm text-text-muted">ESP32-S3 &middot; SX1262</p>
-        <p class="text-xs text-warn mt-2 font-mono">CLI Only</p>
-      </div>
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">Heltec V3</h3>
-        <p class="text-sm text-text-muted">ESP32-S3 &middot; SX1262</p>
-        <p class="text-xs text-accent mt-2 font-mono">Web Flash</p>
-      </div>
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">Heltec V4</h3>
-        <p class="text-sm text-text-muted">ESP32-S3 &middot; SX1262</p>
-        <p class="text-xs text-accent mt-2 font-mono">Web Flash</p>
-      </div>
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">RAK WisBlock 4631</h3>
-        <p class="text-sm text-text-muted">nRF52840 &middot; SX1262</p>
-        <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
-      </div>
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">Wio Tracker L1</h3>
-        <p class="text-sm text-text-muted">nRF52840 &middot; SX1262</p>
-        <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
-      </div>
-      <div class="bg-bg-card border border-border p-5 rounded">
-        <h3 class="font-mono font-medium text-text mb-2">Waveshare RP2040-LoRa</h3>
-        <p class="text-sm text-text-muted">RP2040 &middot; SX1262</p>
-        <p class="text-xs text-info mt-2 font-mono">UF2 Download</p>
-      </div>
+      {
+        sortedBoards.map((board) => (
+          <a
+            href={`/flash?board=${board.id}`}
+            class="block bg-bg-card border border-border p-5 rounded transition-colors hover:border-border-bright hover:bg-bg-elevated no-underline"
+          >
+            <h3 class="font-mono font-medium text-text mb-2">{board.name}</h3>
+            <p class="text-sm text-text-muted">
+              {board.mcu} &middot; {board.radio}
+            </p>
+            <p class={`text-xs ${badgeColor(board)} mt-2 font-mono`}>{badgeText(board)}</p>
+          </a>
+        ))
+      }
     </div>
   </section>
 

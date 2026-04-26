@@ -67,12 +67,14 @@ export const boards: BoardDef[] = [
   },
   {
     id: "rak_wisblock_4631",
-    name: "RAK WisBlock 4631",
+    name: "RAK4631 WisBlock",
     mcu: "nRF52840",
     radio: "SX1262",
     family: "nrf52840",
     flashMethod: "uf2",
     assetPattern: "donglora-rak_wisblock_4631-v{version}.uf2",
+    notes:
+      "RAK4631 Core (nRF52840 + SX1262) on a RAK19007 base, optionally with the RAK1921 OLED. Flashes over native USB CDC-ACM via the Adafruit nRF52 UF2 bootloader — double-tap RESET to expose the RAK4631 drive.",
   },
   {
     id: "wio_tracker_l1",
@@ -96,6 +98,28 @@ export const boards: BoardDef[] = [
 
 export function getAssetName(board: BoardDef, version: string): string {
   return board.assetPattern.replace("{version}", version);
+}
+
+export function badgeText(board: BoardDef): string {
+  switch (board.flashMethod) {
+    case "web-serial":
+      return "Web Flash";
+    case "uf2":
+      return "UF2 Download";
+    case "download-only":
+      return "CLI Only";
+  }
+}
+
+export function badgeColor(board: BoardDef): string {
+  switch (board.flashMethod) {
+    case "web-serial":
+      return "text-accent";
+    case "uf2":
+      return "text-info";
+    case "download-only":
+      return "text-warn";
+  }
 }
 
 import type { ReleaseAsset } from "./types";

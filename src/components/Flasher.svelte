@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { BoardDef, Release } from "../lib/types";
+  import { boards } from "../lib/boards";
   import { fetchReleases } from "../lib/github";
   import BoardSelector from "./BoardSelector.svelte";
   import VersionSelector from "./VersionSelector.svelte";
@@ -27,6 +28,14 @@
         releasesError = err instanceof Error ? err.message : "Failed to load releases";
         releasesLoading = false;
       });
+  });
+
+  // Pre-select board from ?board=<id> deep link (e.g. from the homepage grid)
+  $effect(() => {
+    const boardId = new URLSearchParams(window.location.search).get("board");
+    if (!boardId) return;
+    const found = boards.find((b) => b.id === boardId);
+    if (found) selectedBoard = found;
   });
 
   function handleBoardSelect(board: BoardDef) {

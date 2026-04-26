@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { BoardDef } from "../lib/types";
-  import { boards } from "../lib/boards";
+  import { boards, badgeText, badgeColor } from "../lib/boards";
 
   interface Props {
     selected: BoardDef | null;
@@ -10,28 +10,6 @@
   let { selected, onselect }: Props = $props();
 
   let query = $state("");
-
-  function badgeText(board: BoardDef): string {
-    switch (board.flashMethod) {
-      case "web-serial":
-        return "Web Flash";
-      case "uf2":
-        return "UF2 Download";
-      case "download-only":
-        return "CLI Only";
-    }
-  }
-
-  function badgeColor(board: BoardDef): string {
-    switch (board.flashMethod) {
-      case "web-serial":
-        return "text-accent";
-      case "uf2":
-        return "text-info";
-      case "download-only":
-        return "text-warn";
-    }
-  }
 
   function matches(board: BoardDef, q: string): boolean {
     const needle = q.trim().toLowerCase();
