@@ -55,6 +55,17 @@ export const boards: BoardDef[] = [
     assetPattern: "donglora-heltec_v4-v{version}.bin",
   },
   {
+    id: "heltec_mesh_node_t114",
+    name: "Heltec Mesh Node T114",
+    mcu: "nRF52840",
+    radio: "SX1262",
+    family: "nrf52840",
+    flashMethod: "uf2",
+    assetPattern: "donglora-heltec_mesh_node_t114-v{version}.uf2",
+    notes:
+      "nRF52840 + SX1262 with a 1.14\" 240×135 ST7789 color TFT — the first donglora board with a color display. Flashes over native USB CDC-ACM via the Adafruit nRF52 UF2 bootloader — double-tap RESET to expose the drive.",
+  },
+  {
     id: "lilygo_tbeam_supreme",
     name: "LilyGo T-Beam S3 Supreme",
     mcu: "ESP32-S3",

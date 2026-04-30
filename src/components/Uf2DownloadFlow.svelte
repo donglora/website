@@ -19,9 +19,11 @@
       ? "RAK4631"
       : board.id === "wio_tracker_l1"
         ? "WIO-L1"
-        : board.id === "waveshare_rp2040_lora"
-          ? "RPI-RP2"
-          : "UF2BOOT",
+        : board.id === "heltec_mesh_node_t114"
+          ? "T114BOOT"
+          : board.id === "waveshare_rp2040_lora"
+            ? "RPI-RP2"
+            : "UF2BOOT",
   );
 
   function handleDownload() {
